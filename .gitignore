@@ -18,3 +18,37 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+###> Fichiers sensibles ###
+.env
+.env.test
+.env.prod
+###< Fichiers sensibles ###
+
+###> IDE et éditeurs ###
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+###< IDE et éditeurs ###
+
+###> Logs ###
+*.log
+/var/log/
+###< Logs ###
+
+###> Cache ###
+/var/cache/
+###< Cache ###
