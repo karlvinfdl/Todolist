@@ -1,0 +1,162 @@
+/* ===== PAGE CONNEXION ===== */
+
+.login-page {
+    height: 100vh;
+    overflow: hidden;
+    background-image: url('../images/background.png'); /* image de fond étoilée */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ===== LOGO EN HAUT ===== */
+.login-logo {
+    margin-bottom: 32px;
+}
+
+.login-logo img {
+    height: 44px;
+    width: auto;
+}
+
+/* ===== CARTE CENTRALE ===== */
+.login-card {
+    background: #1C2037 ; /* fond sombre semi-transparent */
+    border-radius: 20px;
+    padding: 44px 48px 36px;
+    width: 100%;
+    max-width: 360px;
+    color: #fff;
+}
+
+.login-card h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.login-card .login-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65); /* texte secondaire atténué */
+    margin-bottom: 32px;
+}
+
+/* ===== CHAMPS DU FORMULAIRE ===== */
+.login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.login-field label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+}
+
+.login-field input {
+    background: rgba(255, 255, 255, 0.07); /* fond très légèrement blanc */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.login-field input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.login-field input:focus {
+    border-color: #3b82f6; /* bordure bleue au focus */
+}
+
+/* ===== LIEN MOT DE PASSE OUBLIÉ ===== */
+.login-forgot {
+    display: block;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    text-decoration: underline;
+    margin-top: -10px;
+    margin-bottom: 28px;
+    cursor: pointer;
+}
+
+.login-forgot:hover {
+    color: #fff;
+}
+
+/* ===== BOUTON SE CONNECTER ===== */
+.btn-submit {
+    width: 100%;
+    padding: 13px;
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 30px 0 30px 0; /* arrondi haut-gauche et bas-droite */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 24px;
+}
+
+.btn-submit:hover {
+    background: #2563eb;
+}
+
+/* ===== LIENS BAS DE CARTE ===== */
+.login-footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.login-footer-links a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* lien retour à l'accueil */
+.login-footer-links .login-back {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.login-footer-links .login-back:hover {
+    color: #fff;
+}
+
+/* ===== MESSAGE D'ERREUR ===== */
+.login-alert {
+    background: rgba(239, 68, 68, 0.2); /* fond rouge transparent */
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #fca5a5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,152 @@
+/* ===== PAGE INSCRIPTION ===== */
+
+.register-page {
+    height: 100vh;
+    overflow: hidden;
+    background-image: url('../images/background.png'); /* image de fond étoilée */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* ===== LOGO EN HAUT ===== */
+.register-logo {
+    margin-bottom: 32px;
+}
+
+.register-logo img {
+    height: 44px;
+    width: auto;
+}
+
+/* ===== CARTE CENTRALE ===== */
+.register-card {
+    background: #1C2037; /* fond sombre identique à la page connexion */
+    border-radius: 20px;
+    padding: 44px 48px 36px;
+    width: 100%;
+    max-width: 360px;
+    color: #fff;
+}
+
+.register-card h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.register-card .register-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65); /* texte secondaire atténué */
+    margin-bottom: 32px;
+}
+
+/* Le formulaire Symfony prend toute la largeur */
+.register-card form {
+    width: 100%;
+}
+
+/* ===== CHAMPS DU FORMULAIRE ===== */
+.register-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.register-field label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+}
+
+/* Les wrappers générés par Symfony doivent prendre toute la largeur */
+.register-field div,
+.register-field .form-group {
+    width: 100%;
+}
+
+.register-field input[type="email"],
+.register-field input[type="password"],
+.register-field input[type="text"] {
+    background: rgba(255, 255, 255, 0.07); /* fond très légèrement blanc */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.register-field input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.register-field input:focus {
+    border-color: #3b82f6; /* bordure bleue au focus */
+}
+
+/* ===== BOUTON CRÉER MON COMPTE ===== */
+.btn-submit {
+    width: 100%;
+    padding: 13px;
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 30px 0 30px 0; /* arrondi haut-gauche et bas-droite */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 24px;
+    margin-top: 8px;
+}
+
+.btn-submit:hover {
+    background: #2563eb;
+}
+
+/* ===== LIEN BAS DE CARTE ===== */
+.register-footer-link {
+    text-align: center;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.register-footer-link a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-footer-link a:hover {
+    text-decoration: underline;
+}
+
+/* ===== MESSAGES D'ERREUR ===== */
+.register-alert {
+    background: rgba(239, 68, 68, 0.2); /* fond rouge transparent */
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #fca5a5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    margin-bottom: 20px;
+}
+
+.register-field .form-error {
+    color: #fca5a5;
+    font-size: 0.82rem;
+    margin-top: 2px;
+}
