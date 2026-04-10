@@ -1,20 +1,62 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laisser un avis – TaskTracker</title>
+    <link rel="stylesheet" href="{{ asset('styles/avis.css') }}">
+    {{ importmap('app') }}
+</head>
+<body>
 
-{% block title %}Hello AvisController!{% endblock %}
+<div class="avis-page">
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="avis-logo">
+        <img src="{{ asset('images/logo.png') }}" alt="TaskTracker">
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="avis-card">
+        <h1>Votre avis</h1>
+        <p class="avis-subtitle">Partagez votre expérience avec TaskTracker</p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/karlv/OneDrive/Desktop/Projet-final/Todolist/src/Controller/AvisController.php</code></li>
-        <li>Your template at <code>C:/Users/karlv/OneDrive/Desktop/Projet-final/Todolist/templates/avis/index.html.twig</code></li>
-    </ul>
+        <form action="{{ path('app_avis_soumettre') }}" method="POST">
+
+            <div class="avis-field">
+                <label for="nom">Votre prénom</label>
+                <input type="text" id="nom" name="nom" placeholder="ex : Sophie" required autocomplete="given-name">
+            </div>
+
+            <div class="avis-field">
+                <label>Note</label>
+                <div class="stars-selector">
+                    <input type="radio" id="star5" name="note" value="5" checked>
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="note" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="note" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="note" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="note" value="1">
+                    <label for="star1">★</label>
+                </div>
+            </div>
+
+            <div class="avis-field">
+                <label for="commentaire">Commentaire</label>
+                <textarea id="commentaire" name="commentaire" placeholder="Décrivez votre expérience..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Envoyer mon avis</button>
+
+        </form>
+
+        <div class="avis-footer-links">
+            <a href="{{ path('app_accueil') }}" class="avis-back">← Retour à l'accueil</a>
+        </div>
+    </div>
+
 </div>
-{% endblock %}
+
+</body>
+</html>
