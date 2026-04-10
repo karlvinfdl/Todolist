@@ -2,5 +2,8 @@
   "devDependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8"
+  },
+  "dependencies": {
+    "mongodb": "^7.1.1"
   }
 }
