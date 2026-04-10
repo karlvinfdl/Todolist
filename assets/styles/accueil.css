@@ -1,22 +1,25 @@
 /* ===== ACCUEIL PAGE ===== */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     overflow: auto;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
     color: #fff;
 }
 
 .accueil-page {
     min-height: 100vh;
     overflow: visible;
-    background-image: url('../images/background.png');
+    background-image: url("../images/background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -40,14 +43,16 @@ html, body {
 
 .btn-avis-nav {
     background: none;
-    border: 1.5px solid rgba(255, 255, 255, 0.6);
     border-radius: 20px;
     color: #fff;
     font-size: 0.9rem;
     font-weight: 600;
     padding: 7px 20px;
+    text-decoration: none;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
+    transition:
+        background 0.2s,
+        border-color 0.2s;
 }
 
 .btn-avis-nav:hover {
@@ -122,7 +127,9 @@ html, body {
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
-    transition: background 0.2s, color 0.2s;
+    transition:
+        background 0.2s,
+        color 0.2s;
 }
 
 .btn-register:hover {
@@ -141,7 +148,7 @@ html, body {
 
 /* ===== REVIEWS SECTION ===== */
 .reviews-section {
-    padding: 40px 20px;
+    padding: 5px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -152,7 +159,7 @@ html, body {
     display: flex;
     justify-content: center;
     gap: 20px;
-    padding: 30px 40px;
+    padding: 5px 40px;
     flex-wrap: wrap;
 }
 
@@ -316,8 +323,14 @@ html, body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-16px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .modal-close {
@@ -336,7 +349,6 @@ html, body {
 .modal-close:hover {
     color: #fff;
 }
-
 
 /* ===== FOOTER ===== */
 .footer {
@@ -426,7 +438,8 @@ html, body {
     .hero-subtitle {
         font-size: 1rem;
     }
-    .btn-login, .btn-register {
+    .btn-login,
+    .btn-register {
         padding: 12px 32px;
         font-size: 0.9rem;
     }
