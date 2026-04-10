@@ -14,4 +14,63 @@
 
     <img src="{{ asset('images/image_1.png') }}" alt="Illustration TaskTracker" class="hero-image">
 </section>
+
+{# ===== AVIS ===== #}
+<section class="reviews-section">
+    <div class="reviews">
+        {% for a in avis %}
+        <div class="review-card">
+            <div class="review-avatar">{{ a.nom|first|upper }}</div>
+            <div class="review-info">
+                <span class="review-name">{{ a.nom }}</span>
+                <div class="review-stars">
+                    {% for i in 1..5 %}
+                        <span class="{{ i <= a.note ? 'star-filled' : 'star-empty' }}">★</span>
+                    {% endfor %}
+                </div>
+                <span class="review-date">{{ a.createdAt|date('M Y') }}</span>
+                {% if a.commentaire %}
+                <span class="review-comment">"{{ a.commentaire }}"</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{# ===== MODALE AVIS ===== #}
+<div id="modal-avis" class="modal-overlay" hidden>
+    <div class="modal-box">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <h2 class="review-form-title">Laisser un avis</h2>
+        <form action="{{ path('app_avis_soumettre') }}" method="POST" class="review-form">
+            <input type="text" name="nom" placeholder="Votre prénom" required class="review-input">
+
+            <div class="review-stars-input">
+                <span>Note :</span>
+                {% for i in 1..5 %}
+                <label class="star-label">
+                    <input type="radio" name="note" value="{{ i }}" {% if i == 5 %}checked{% endif %}>
+                    <span>★</span>
+                </label>
+                {% endfor %}
+            </div>
+
+            <textarea name="commentaire" placeholder="Votre commentaire..." required class="review-textarea"></textarea>
+            <button type="submit" class="btn-login">Envoyer</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const btn    = document.getElementById('btn-avis');
+    const modal  = document.getElementById('modal-avis');
+    const close  = document.getElementById('modal-close');
+
+    btn.addEventListener('click', () => modal.removeAttribute('hidden'));
+    close.addEventListener('click', () => modal.setAttribute('hidden', ''));
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.setAttribute('hidden', '');
+    });
+</script>
 {% endblock %}
