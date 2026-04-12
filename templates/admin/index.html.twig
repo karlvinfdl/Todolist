@@ -1,20 +1,227 @@
-{% extends 'base.html.twig' %}
+{# Page admin – autonome, n'étend pas base.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration – TaskTracker</title>
+    <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
+    {{ importmap('app') }}
+</head>
+<body>
 
-{% block title %}Hello AdminController!{% endblock %}
+{# ===== NAVBAR ===== #}
+<nav class="admin-navbar">
+    <div class="admin-navbar-logo">
+        <img src="{{ asset('images/logo.png') }}" alt="TaskTracker">
+    </div>
+    <span class="admin-navbar-title">Panneau d'administration</span>
+    <div class="admin-navbar-actions">
+        <a href="{{ path('app_tableau_de_bord') }}">← Tableau de bord</a>
+        <a href="{{ path('app_logout') }}" class="btn-deconnexion">Déconnexion</a>
+    </div>
+</nav>
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="admin-content">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Vue d'ensemble</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/karlv/OneDrive/Desktop/Projet-final/Todolist/src/Controller/AdminController.php</code></li>
-        <li>Your template at <code>C:/Users/karlv/OneDrive/Desktop/Projet-final/Todolist/templates/admin/index.html.twig</code></li>
-    </ul>
+    {# Flash messages #}
+    {% for msg in app.flashes('error') %}
+        <div class="flash-error">{{ msg }}</div>
+    {% endfor %}
+
+    {# ===== STATS ===== #}
+    <div class="admin-stats">
+        <div class="stat-card">
+            <div class="stat-card-label">Utilisateurs</div>
+            <div class="stat-card-value violet">{{ stats.users }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-label">Projets</div>
+            <div class="stat-card-value bleu">{{ stats.projects }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-label">Tâches totales</div>
+            <div class="stat-card-value orange">{{ stats.tasks }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-label">À faire</div>
+            <div class="stat-card-value rouge">{{ stats.a_faire }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-label">En cours</div>
+            <div class="stat-card-value jaune">{{ stats.en_cours }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-label">Terminées</div>
+            <div class="stat-card-value vert">{{ stats.terminee }}</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-card-label">Avis reçus</div>
+            <div class="stat-card-value bleu">{{ stats.avis }}</div>
+        </div>
+    </div>
+
+    {# ===== LISTE UTILISATEURS ===== #}
+    <div class="admin-section">
+        <div class="admin-section-title">Gestion des utilisateurs</div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Projets</th>
+                    <th>Inscrit le</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            <span class="badge-admin">Admin</span>
+                        {% else %}
+                            <span class="badge-user">Utilisateur</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.projects|length }}</td>
+                    <td>{{ user.createdAt|date('d/m/Y') }}</td>
+                    <td>
+                        <div class="actions-cell">
+                            {# Bouton promouvoir / rétrograder #}
+                            {% if user.id != app.user.id %}
+                                <form method="post" action="{{ path('app_admin_role_user', {id: user.id}) }}">
+                                    {% if 'ROLE_ADMIN' in user.roles %}
+                                        <button type="submit" class="btn-action btn-demote">Rétrograder</button>
+                                    {% else %}
+                                        <button type="submit" class="btn-action btn-promote">Promouvoir admin</button>
+                                    {% endif %}
+                                </form>
+
+                                {# Bouton supprimer #}
+                                <form method="post" action="{{ path('app_admin_supprimer_user', {id: user.id}) }}"
+                                      onsubmit="return confirm('Supprimer {{ user.email }} et toutes ses données ?')">
+                                    <button type="submit" class="btn-action btn-delete">Supprimer</button>
+                                </form>
+                            {% else %}
+                                <span style="color: rgba(255,255,255,0.25); font-size: 0.8rem;">Vous</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="table-empty">Aucun utilisateur trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {# ===== LISTE PROJETS ===== #}
+    <div class="admin-section">
+        <div class="admin-section-title">Tous les projets</div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Couleur</th>
+                    <th>Propriétaire</th>
+                    <th>Tâches</th>
+                    <th>Créé le</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.id }}</td>
+                    <td>
+                        <span style="display:inline-flex; align-items:center; gap:8px;">
+                            <span style="width:10px; height:10px; border-radius:50%; background:{{ project.color }}; display:inline-block;"></span>
+                            {{ project.name }}
+                        </span>
+                    </td>
+                    <td>{{ project.color }}</td>
+                    <td>{{ project.user.email }}</td>
+                    <td>{{ project.tasks|length }}</td>
+                    <td>{{ project.createdAt|date('d/m/Y') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="table-empty">Aucun projet trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {# ===== LISTE AVIS ===== #}
+    <div class="admin-section">
+        <div class="admin-section-title">Gestion des avis (MongoDB)</div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Note</th>
+                    <th>Commentaire</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in avis %}
+                <tr>
+                    <td>{{ a.nom }}</td>
+                    <td>
+                        {% for i in 1..5 %}
+                            <span style="color: {{ i <= a.note ? '#eab308' : 'rgba(255,255,255,0.15)' }};">★</span>
+                        {% endfor %}
+                    </td>
+                    <td style="max-width: 300px; color: rgba(255,255,255,0.7);">{{ a.commentaire }}</td>
+                    <td>
+                        {% if a.valide %}
+                            <span class="badge-user">Publié</span>
+                        {% else %}
+                            <span style="background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.3); color:#fde047; border-radius:20px; padding:3px 10px; font-size:0.75rem; font-weight:600;">En attente</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ a.createdAt|date('d/m/Y H:i') }}</td>
+                    <td>
+                        <div class="actions-cell">
+                            <form method="post" action="{{ path('app_admin_valider_avis', {id: a.id}) }}">
+                                {% if a.valide %}
+                                    <button type="submit" class="btn-action btn-demote">Dépublier</button>
+                                {% else %}
+                                    <button type="submit" class="btn-action btn-promote">Publier</button>
+                                {% endif %}
+                            </form>
+                            <form method="post" action="{{ path('app_admin_supprimer_avis', {id: a.id}) }}"
+                                  onsubmit="return confirm('Supprimer cet avis ?')">
+                                <button type="submit" class="btn-action btn-delete">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="table-empty">Aucun avis reçu.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
-{% endblock %}
+
+</body>
+</html>
