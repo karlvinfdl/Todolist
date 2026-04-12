@@ -1,22 +1,47 @@
-{% extends 'base.html.twig' %}
+{# Page mot de passe oublié – autonome, n'étend pas base.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe oublié – TaskTracker</title>
+    <link rel="stylesheet" href="{{ asset('styles/register.css') }}">
+    {{ importmap('app') }}
+</head>
+<body>
 
-{% block title %}Reset your password{% endblock %}
+<div class="register-page">
 
-{% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Reset your password</h1>
+    <div class="register-logo">
+        <img src="{{ asset('images/logo.png') }}" alt="TaskTracker">
+    </div>
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Enter your email address, and we will send you a
-                link to reset your password.
-            </small>
+    <div class="register-card">
+        <h1>Mot de passe oublié</h1>
+        <p class="register-subtitle">Entrez votre email pour recevoir un lien de réinitialisation.</p>
+
+        {% for flash_error in app.flashes('reset_password_error') %}
+            <div class="register-alert">{{ flash_error }}</div>
+        {% endfor %}
+
+        {{ form_start(requestForm, { attr: { novalidate: 'novalidate' } }) }}
+
+            <div class="register-field">
+                {{ form_label(requestForm.email, 'Adresse email') }}
+                {{ form_widget(requestForm.email, { attr: { placeholder: 'example@gmail.com' } }) }}
+                {{ form_errors(requestForm.email) }}
+            </div>
+
+            <button type="submit" class="btn-submit">Envoyer le lien</button>
+
+        {{ form_end(requestForm) }}
+
+        <div class="register-footer-link">
+            Vous vous souvenez ? <a href="{{ path('app_login') }}">Se connecter</a>
         </div>
+    </div>
 
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
-{% endblock %}
+</div>
+
+</body>
+</html>
