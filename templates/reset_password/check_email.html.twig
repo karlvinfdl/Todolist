@@ -1,11 +1,42 @@
-{% extends 'base.html.twig' %}
+{# Page confirmation email envoyé – autonome, n'étend pas base.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email envoyé – TaskTracker</title>
+    <link rel="stylesheet" href="{{ asset('styles/register.css') }}">
+    {{ importmap('app') }}
+</head>
+<body>
 
-{% block title %}Password Reset Email Sent{% endblock %}
+<div class="register-page">
 
-{% block body %}
-    <p>
-        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
-{% endblock %}
+    <div class="register-logo">
+        <img src="{{ asset('images/logo.png') }}" alt="TaskTracker">
+    </div>
+
+    <div class="register-card">
+        <h1>Email envoyé !</h1>
+        <p class="register-subtitle">
+            Un lien de réinitialisation a été envoyé si un compte correspond à votre adresse email.
+        </p>
+
+        <p class="register-subtitle">
+            Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+            Pensez à vérifier vos spams.
+        </p>
+
+        <div class="register-footer-link">
+            Pas reçu ? <a href="{{ path('app_forgot_password_request') }}">Réessayer</a>
+        </div>
+
+        <div class="register-footer-link" style="margin-top: 12px;">
+            <a href="{{ path('app_login') }}">← Retour à la connexion</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
