@@ -1,12 +1,57 @@
-{% extends 'base.html.twig' %}
+{# Page nouveau mot de passe – autonome, n'étend pas base.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouveau mot de passe – TaskTracker</title>
+    <link rel="stylesheet" href="{{ asset('styles/register.css') }}">
+    {{ importmap('app') }}
+</head>
+<body>
 
-{% block title %}Reset your password{% endblock %}
+<div class="register-page">
 
-{% block body %}
-    <h1>Reset your password</h1>
+    <div class="register-logo">
+        <img src="{{ asset('images/logo.png') }}" alt="TaskTracker">
+    </div>
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
-{% endblock %}
+    <div class="register-card">
+        <h1>Nouveau mot de passe</h1>
+        <p class="register-subtitle">Choisissez un nouveau mot de passe sécurisé.</p>
+
+        <div style="background: rgba(59,130,246,0.1); border-left: 3px solid #3b82f6; border-radius: 6px; padding: 12px 16px; margin-bottom: 24px; font-size: 0.85rem; color: rgba(255,255,255,0.75);">
+            <strong style="color: #fff; display: block; margin-bottom: 6px;">Critères requis :</strong>
+            Minimum 12 caractères<br>
+            Mélange de lettres majuscules et minuscules<br>
+            Au moins un chiffre<br>
+            Au moins un caractère spécial (!, @, #, $…)
+        </div>
+
+        {{ form_start(resetForm, { attr: { novalidate: 'novalidate' } }) }}
+
+            <div class="register-field">
+                {{ form_label(resetForm.plainPassword.first) }}
+                {{ form_widget(resetForm.plainPassword.first) }}
+                {{ form_errors(resetForm.plainPassword.first) }}
+            </div>
+
+            <div class="register-field">
+                {{ form_label(resetForm.plainPassword.second) }}
+                {{ form_widget(resetForm.plainPassword.second) }}
+                {{ form_errors(resetForm.plainPassword.second) }}
+            </div>
+
+            <button type="submit" class="btn-submit">Réinitialiser le mot de passe</button>
+
+        {{ form_end(resetForm) }}
+
+        <div class="register-footer-link">
+            <a href="{{ path('app_login') }}">← Retour à la connexion</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
