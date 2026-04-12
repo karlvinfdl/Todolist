@@ -123,3 +123,5 @@ final class TableauDeBordController extends AbstractController
         return $this->redirectToRoute('app_tableau_de_bord');
     }
 }
+
+
