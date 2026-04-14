@@ -52,7 +52,7 @@ html, body {
     align-items: center;
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    border-radius: 30px;
     padding: 8px 14px;
     gap: 8px;
     width: 100%;
@@ -87,7 +87,7 @@ html, body {
     flex-shrink: 0;
 }
 
-/* Bouton Nouvelle tâche */
+/* Bouton Nouveau + */
 .btn-nouvelle-tache {
     display: flex;
     align-items: center;
@@ -95,7 +95,7 @@ html, body {
     background: #3b82f6;
     color: #fff;
     border: none;
-    border-radius: 30px 0 30px 0;
+    border-radius: 30px 0px 30px 0px;
     padding: 10px 20px;
     font-size: 0.9rem;
     font-weight: 600;
@@ -104,14 +104,42 @@ html, body {
     transition: background 0.2s;
 }
 
+.btn-nouvelle-tache .plus {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
 .btn-nouvelle-tache:hover {
     background: #2563eb;
     color: #fff;
 }
 
-.btn-nouvelle-tache .plus {
-    font-size: 1.2rem;
-    line-height: 1;
+/* Onglets modale */
+.modal-tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.modal-tab {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    border: none;
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.modal-tab.active {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.modal-tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
 }
 
 /* Avatar utilisateur */
@@ -153,7 +181,7 @@ html, body {
     padding: 20px 0 16px;
     overflow-y: auto;
     background: #1C2037;
-    border-radius: 60px 0px 60px 0px;
+    border-radius: 30px 0 0 30px;
 }
 
 /* Navigation principale */
@@ -168,7 +196,7 @@ html, body {
 .sidebar-nav a {
     display: block;
     padding: 10px 16px;
-    border-radius: 8px;
+    border-radius: 30px;
     color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
     font-size: 0.95rem;
@@ -179,7 +207,7 @@ html, body {
 .sidebar-nav a:hover {
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
-    border-radius: 50px 0px 0px 0px;
+    border-radius: 30px;
     margin-right: -12px;
     padding-right: 24px;
 }
@@ -188,7 +216,7 @@ html, body {
     background: #3b82f6;
     color: #fff;
     font-weight: 600;
-    border-radius: 50px 0px 0px 0px; /* arrondi gauche, collé à droite */
+    border-radius: 30px 0px 0px 30px; /* arrondi gauche, collé à droite */
     margin-right: -12px; /* colle le bord droit à la sidebar */
     padding-right: 24px;
 }
@@ -219,7 +247,7 @@ html, body {
     align-items: center;
     gap: 10px;
     padding: 8px 12px;
-    border-radius: 8px;
+    border-radius: 30px;
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.9rem;
     cursor: pointer;
@@ -230,7 +258,7 @@ html, body {
 .sidebar-project:hover {
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
-    border-radius: 50px 0px 0px 0px;
+    border-radius: 30px 0px 0px 30px;
     margin-right: -12px;
     padding-right: 24px;
 }
@@ -239,7 +267,7 @@ html, body {
     background: #3b82f6;
     color: #fff;
     font-weight: 600;
-    border-radius: 50px 0px 0px 0px;
+    border-radius: 30px 0px 0px 30px;
     margin-right: -12px;
     padding-right: 24px;
 }
@@ -281,7 +309,7 @@ html, body {
     align-items: center;
     gap: 10px;
     padding: 7px 12px;
-    border-radius: 8px;
+    border-radius: 30px;
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.9rem;
     cursor: pointer;
@@ -292,7 +320,7 @@ html, body {
 .sidebar-category:hover {
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
-    border-radius: 50px 0px 0px 0px;
+    border-radius: 30px 0px 0px 30px;
     margin-right: -12px;
     padding-right: 24px;
 }
@@ -301,7 +329,7 @@ html, body {
     background: #3b82f6;
     color: #fff;
     font-weight: 600;
-    border-radius: 50px 0px 0px 0px;
+    border-radius: 30px 0px 0px 30px;
     margin-right: -12px;
     padding-right: 24px;
 }
@@ -318,7 +346,7 @@ html, body {
     background: #ef4444;
     color: #fff;
     border: none;
-    border-radius: 30px 0 30px 0;
+    border-radius: 30px;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
@@ -340,7 +368,7 @@ html, body {
     padding: 28px 32px;
     min-width: 0;
     background: #1C2037;
-    border-radius: 0px 60px 0px 60px;
+    border-radius: 30px;
 }
 
 .dash-content-title {
@@ -361,7 +389,7 @@ html, body {
 .stat-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    border-radius: 30px;
     padding: 20px 22px;
 }
 
@@ -400,7 +428,7 @@ html, body {
 .task-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    border-radius: 30px;
     padding: 14px 18px;
     display: flex;
     align-items: center;
@@ -465,7 +493,7 @@ html, body {
 
 .badge {
     padding: 4px 10px;
-    border-radius: 6px;
+    border-radius: 30px;
     font-size: 0.75rem;
     font-weight: 600;
     white-space: nowrap;
@@ -503,7 +531,7 @@ html, body {
     background: #ef4444;
     color: #fff;
     border: none;
-    border-radius: 6px;
+    border-radius: 30px;
     padding: 5px 12px;
     font-size: 0.78rem;
     font-weight: 600;
@@ -535,7 +563,7 @@ html, body {
 .modal-nouvelle-tache {
     background: #1C2037;
     padding: 32px 28px;
-    border-radius: 12px;
+    border-radius: 30px;
     width: 480px;
     max-height: 90vh;
     overflow-y: auto;
@@ -590,7 +618,7 @@ html, body {
 .panel-field select {
     background: rgba(255, 255, 255, 0.07);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
+    border-radius: 30px;
     padding: 11px 14px;
     color: #fff;
     font-size: 0.9rem;
@@ -633,7 +661,7 @@ html, body {
     background: #3b82f6;
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
@@ -648,7 +676,7 @@ html, body {
     background: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.75);
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
@@ -662,7 +690,7 @@ html, body {
     background: rgba(59, 130, 246, 0.5);
     padding: 12px 80px 8px;
     flex-shrink: 0;
-    border-radius: 100px 0 100px 0;
+    border-radius: 100px 0 0px 0;
 }
 
 .dash-footer-top {

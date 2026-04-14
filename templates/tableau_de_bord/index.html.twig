@@ -24,8 +24,8 @@
         </div>
 
         <div class="dash-navbar-actions">
-            <button class="btn-nouvelle-tache" id="btnNouvelleTache">
-                Nouvelle tâche <span class="plus">+</span>
+            <button class="btn-nouvelle-tache" id="btnNouveauElement">
+                Nouveau <span class="plus">+</span>
             </button>
             <div class="dash-avatar">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
@@ -54,7 +54,6 @@
                         </a>
                     {% endfor %}
                 </div>
-                <a href="#" class="sidebar-new-project" id="btnNouveauProjet">Nouveau projet +</a>
             </div>
 
             <div class="sidebar-section">
@@ -202,131 +201,119 @@
 
 </div>
 
-{# ===== MODALE NOUVEAU PROJET ===== #}
-<div class="modal-overlay" id="overlayProjet">
-    <div class="modal-nouvelle-tache" id="modalNouveauProjet">
-        <div class="panel-header">
-            <h2>Nouveau projet</h2>
-            <button class="btn-fermer-panel" id="fermerProjetX">✕</button>
-        </div>
-        <form method="post" action="{{ path('app_projet_creer') }}">
-            <div class="panel-field">
-                <label for="projetNom">Nom <span class="requis">*</span></label>
-                <input type="text" id="projetNom" name="name" placeholder="Nom du projet..." required>
-            </div>
-            <div class="panel-field">
-                <label for="projetCouleur">Couleur</label>
-                <input type="color" id="projetCouleur" name="color" value="#3B82F6" style="height:42px; padding:4px 8px; cursor:pointer;">
-            </div>
-            <div class="panel-footer">
-                <button type="submit" class="btn-enregistrer">Créer</button>
-                <button type="button" class="btn-annuler" id="annulerProjet">Annuler</button>
-            </div>
-        </form>
-    </div>
-</div>
+{# ===== MODALE UNIFIÉE TÂCHE / PROJET ===== #}
+<div class="modal-overlay" id="overlayUnifie">
+    <div class="modal-nouvelle-tache" id="modalUnifie">
 
-{# ===== MODALE NOUVELLE TÂCHE ===== #}
-<div class="modal-overlay" id="overlayTache">
-    <div class="modal-nouvelle-tache" id="modalNouvelleTache">
+        {# En-tête avec onglets #}
         <div class="panel-header">
-            <h2>Nouvelle tâche</h2>
-            <button class="btn-fermer-panel" id="fermerTacheX">✕</button>
+            <div class="modal-tabs">
+                <button class="modal-tab active" id="tabTache" onclick="basculerOnglet('tache')">Nouvelle tâche</button>
+                <button class="modal-tab" id="tabProjet" onclick="basculerOnglet('projet')">Nouveau projet</button>
+            </div>
+            <button class="btn-fermer-panel" id="fermerUnifieX">✕</button>
         </div>
-        <form method="post" action="{{ path('app_tache_creer') }}">
-            <div class="panel-field">
-                <label for="tacheTitle">Titre <span class="requis">*</span></label>
-                <input type="text" id="tacheTitle" name="title" placeholder="Nom de la tâche..." required>
-            </div>
-            <div class="panel-field">
-                <label for="tacheDesc">Description</label>
-                <textarea id="tacheDesc" name="description" placeholder="Ajouter une description..."></textarea>
-            </div>
-            <div class="panel-field">
-                <label for="tacheProjet">Projet</label>
-                <select id="tacheProjet" name="project_id" required>
-                    {% for project in projects %}
-                        <option value="{{ project.id }}">{{ project.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="panel-field">
-                <label for="tacheStatut">Statut</label>
-                <select id="tacheStatut" name="status">
-                    <option value="a_faire">A faire</option>
-                    <option value="en_cours">En cours</option>
-                    <option value="terminee">Terminée</option>
-                </select>
-            </div>
-            <div class="panel-field">
-                <label for="tachePriorite">Priorité</label>
-                <select id="tachePriorite" name="priority">
-                    <option value="basse">Basse</option>
-                    <option value="moyenne" selected>Moyenne</option>
-                    <option value="haute">Haute</option>
-                </select>
-            </div>
-            <div class="panel-field">
-                <label for="tacheDate">Date d'échéance</label>
-                <input type="date" id="tacheDate" name="dueDate">
-            </div>
-            <div class="panel-footer">
-                <button type="submit" class="btn-enregistrer">Enregistrer</button>
-                <button type="button" class="btn-annuler" id="annulerTache">Annuler</button>
-            </div>
-        </form>
+
+        {# Formulaire Tâche #}
+        <div id="contenuTache">
+            <form method="post" action="{{ path('app_tache_creer') }}">
+                <div class="panel-field">
+                    <label for="tacheTitle">Titre <span class="requis">*</span></label>
+                    <input type="text" id="tacheTitle" name="title" placeholder="Nom de la tâche..." required>
+                </div>
+                <div class="panel-field">
+                    <label for="tacheDesc">Description</label>
+                    <textarea id="tacheDesc" name="description" placeholder="Ajouter une description..."></textarea>
+                </div>
+                <div class="panel-field">
+                    <label for="tacheProjet">Projet</label>
+                    <select id="tacheProjet" name="project_id" required>
+                        {% for project in projects %}
+                            <option value="{{ project.id }}">{{ project.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="panel-field">
+                    <label for="tacheStatut">Statut</label>
+                    <select id="tacheStatut" name="status">
+                        <option value="a_faire">A faire</option>
+                        <option value="en_cours">En cours</option>
+                        <option value="terminee">Terminée</option>
+                    </select>
+                </div>
+                <div class="panel-field">
+                    <label for="tachePriorite">Priorité</label>
+                    <select id="tachePriorite" name="priority">
+                        <option value="basse">Basse</option>
+                        <option value="moyenne" selected>Moyenne</option>
+                        <option value="haute">Haute</option>
+                    </select>
+                </div>
+                <div class="panel-field">
+                    <label for="tacheDate">Date d'échéance</label>
+                    <input type="date" id="tacheDate" name="dueDate">
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn-enregistrer">Enregistrer</button>
+                    <button type="button" class="btn-annuler" id="annulerTache">Annuler</button>
+                </div>
+            </form>
+        </div>
+
+        {# Formulaire Projet #}
+        <div id="contenuProjet" style="display:none;">
+            <form method="post" action="{{ path('app_projet_creer') }}">
+                <div class="panel-field">
+                    <label for="projetNom">Nom <span class="requis">*</span></label>
+                    <input type="text" id="projetNom" name="name" placeholder="Nom du projet..." required>
+                </div>
+                <div class="panel-field">
+                    <label for="projetCouleur">Couleur</label>
+                    <input type="color" id="projetCouleur" name="color" value="#3B82F6" style="height:42px; padding:4px 8px; cursor:pointer;">
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn-enregistrer">Créer</button>
+                    <button type="button" class="btn-annuler" id="annulerProjet">Annuler</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>
 
 <script>
-    /* ===== Modale Nouvelle Tâche ===== */
-    let btnNouvelleTache = document.getElementById('btnNouvelleTache');
-    let overlayTache = document.getElementById('overlayTache');
-    let fermerTacheX = document.getElementById('fermerTacheX');
-    let annulerTache = document.getElementById('annulerTache');
+    /* ===== Modale unifiée ===== */
+    var overlayUnifie = document.getElementById('overlayUnifie');
 
-    btnNouvelleTache.addEventListener('click', function() {
-        overlayTache.style.display = 'flex';
+    document.getElementById('btnNouveauElement').addEventListener('click', function() {
+        basculerOnglet('tache');
+        overlayUnifie.style.display = 'flex';
     });
 
-    fermerTacheX.addEventListener('click', function() {
-        overlayTache.style.display = 'none';
+    document.getElementById('fermerUnifieX').addEventListener('click', function() {
+        overlayUnifie.style.display = 'none';
     });
 
-    annulerTache.addEventListener('click', function() {
-        overlayTache.style.display = 'none';
+    document.getElementById('annulerTache').addEventListener('click', function() {
+        overlayUnifie.style.display = 'none';
     });
 
-    overlayTache.addEventListener('click', function(event) {
-        if (event.target === overlayTache) {
-            overlayTache.style.display = 'none';
+    document.getElementById('annulerProjet').addEventListener('click', function() {
+        overlayUnifie.style.display = 'none';
+    });
+
+    overlayUnifie.addEventListener('click', function(event) {
+        if (event.target === overlayUnifie) {
+            overlayUnifie.style.display = 'none';
         }
     });
 
-    /* ===== Modale Nouveau Projet ===== */
-    let btnNouveauProjet = document.getElementById('btnNouveauProjet');
-    let overlayProjet = document.getElementById('overlayProjet');
-    let fermerProjetX = document.getElementById('fermerProjetX');
-    let annulerProjet = document.getElementById('annulerProjet');
-
-    btnNouveauProjet.addEventListener('click', function(event) {
-        event.preventDefault();
-        overlayProjet.style.display = 'flex';
-    });
-
-    fermerProjetX.addEventListener('click', function() {
-        overlayProjet.style.display = 'none';
-    });
-
-    annulerProjet.addEventListener('click', function() {
-        overlayProjet.style.display = 'none';
-    });
-
-    overlayProjet.addEventListener('click', function(event) {
-        if (event.target === overlayProjet) {
-            overlayProjet.style.display = 'none';
-        }
-    });
+    function basculerOnglet(onglet) {
+        document.getElementById('contenuTache').style.display = onglet === 'tache' ? 'block' : 'none';
+        document.getElementById('contenuProjet').style.display = onglet === 'projet' ? 'block' : 'none';
+        document.getElementById('tabTache').classList.toggle('active', onglet === 'tache');
+        document.getElementById('tabProjet').classList.toggle('active', onglet === 'projet');
+    }
 
     /* ===== Lien actif sidebar ===== */
     function setActif(el) {
