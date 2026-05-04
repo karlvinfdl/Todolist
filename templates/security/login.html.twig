@@ -7,6 +7,7 @@
     <title>Connexion – TaskTracker</title>
     {# Feuille de style dédiée à la page connexion #}
     <link rel="stylesheet" href="{{ asset('styles/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
     {{ importmap('app') }}
 </head>
 <body>
@@ -44,6 +45,14 @@
                        autocomplete="current-password" required>
             </div>
 
+            {# Case à cocher Se souvenir de moi (7 jours) – le nom _remember_me est requis par Symfony Security #}
+            <div class="login-remember">
+                <label for="rememberMe">
+                    <input type="checkbox" id="rememberMe" name="_remember_me" value="1">
+                    Se souvenir de moi <span class="login-remember-hint">(7 jours)</span>
+                </label>
+            </div>
+
             {# Lien mot de passe oublié #}
             <a href="{{ path('app_forgot_password_request') }}" class="login-forgot">Mot de passe oublié ?</a>
 
@@ -61,6 +70,34 @@
     </div>
 
 </div>
+
+
+{# ===== BANDEAU CONSENTEMENT COOKIES ===== #}
+<div class="cookie-banner" id="cookieBanner" style="display:none;">
+    <p>
+        TaskTracker utilise des cookies nécessaires à son fonctionnement (session, sécurité CSRF).
+        <a href="{{ path('app_cookies') }}">En savoir plus</a>
+    </p>
+    <div class="cookie-banner-btns">
+        <button class="btn-refuse-cookies" onclick="refuserCookies()">Refuser les optionnels</button>
+        <button class="btn-accept-cookies" onclick="accepterCookies()">Accepter</button>
+    </div>
+</div>
+<script>
+    (function () {
+        if (!localStorage.getItem('cookie_consent')) {
+            document.getElementById('cookieBanner').style.display = 'flex';
+        }
+    })();
+    function accepterCookies() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+    function refuserCookies() {
+        localStorage.setItem('cookie_consent', 'refused');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>

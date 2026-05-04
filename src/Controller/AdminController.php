@@ -10,7 +10,6 @@ use App\Repository\UserRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -63,26 +62,9 @@ final class AdminController extends AbstractController
         return $this->redirectToRoute('app_admin');
     }
 
-    #[Route('/utilisateur/role/{id}', name: 'app_admin_role_user', methods: ['POST'])]
-    public function toggleRole(User $user, EntityManagerInterface $em): Response
-    {
-        if ($user->getId() === $this->getUser()->getId()) {
-            $this->addFlash('error', 'Vous ne pouvez pas modifier votre propre rôle.');
-            return $this->redirectToRoute('app_admin');
-        }
-
-        $roles = $user->getRoles();
-
-        if (\in_array('ROLE_ADMIN', $roles, true)) {
-            $user->setRoles(['ROLE_USER']);
-        } else {
-            $user->setRoles(['ROLE_ADMIN']);
-        }
-
-        $em->flush();
-
-        return $this->redirectToRoute('app_admin');
-    }
+    // ===== SUPPRESSION VOLONTAIRE =====
+    // La promotion/rétrogradation admin a été retirée : seul un accès direct en BDD
+    // peut modifier les rôles, pour éviter toute élévation de privilèges accidentelle.
 
     #[Route('/avis/supprimer/{id}', name: 'app_admin_supprimer_avis', methods: ['POST'])]
     public function supprimerAvis(string $id, DocumentManager $dm): Response

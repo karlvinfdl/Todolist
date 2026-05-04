@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laisser un avis – TaskTracker</title>
     <link rel="stylesheet" href="{{ asset('styles/avis.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
     {{ importmap('app') }}
 </head>
 <body>
@@ -57,6 +58,34 @@
     </div>
 
 </div>
+
+
+{# ===== BANDEAU CONSENTEMENT COOKIES ===== #}
+<div class="cookie-banner" id="cookieBanner" style="display:none;">
+    <p>
+        TaskTracker utilise des cookies nécessaires à son fonctionnement (session, sécurité CSRF).
+        <a href="{{ path('app_cookies') }}">En savoir plus</a>
+    </p>
+    <div class="cookie-banner-btns">
+        <button class="btn-refuse-cookies" onclick="refuserCookies()">Refuser les optionnels</button>
+        <button class="btn-accept-cookies" onclick="accepterCookies()">Accepter</button>
+    </div>
+</div>
+<script>
+    (function () {
+        if (!localStorage.getItem('cookie_consent')) {
+            document.getElementById('cookieBanner').style.display = 'flex';
+        }
+    })();
+    function accepterCookies() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+    function refuserCookies() {
+        localStorage.setItem('cookie_consent', 'refused');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>

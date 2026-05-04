@@ -94,17 +94,8 @@
                     <td>{{ user.createdAt|date('d/m/Y') }}</td>
                     <td>
                         <div class="actions-cell">
-                            {# Bouton promouvoir / rétrograder #}
+                            {# Seul le bouton supprimer est disponible — la promotion admin se fait en BDD #}
                             {% if user.id != app.user.id %}
-                                <form method="post" action="{{ path('app_admin_role_user', {id: user.id}) }}">
-                                    {% if 'ROLE_ADMIN' in user.roles %}
-                                        <button type="submit" class="btn-action btn-demote">Rétrograder</button>
-                                    {% else %}
-                                        <button type="submit" class="btn-action btn-promote">Promouvoir admin</button>
-                                    {% endif %}
-                                </form>
-
-                                {# Bouton supprimer #}
                                 <form method="post" action="{{ path('app_admin_supprimer_user', {id: user.id}) }}"
                                       onsubmit="return confirm('Supprimer {{ user.email }} et toutes ses données ?')">
                                     <button type="submit" class="btn-action btn-delete">Supprimer</button>

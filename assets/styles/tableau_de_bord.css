@@ -142,25 +142,6 @@ html, body {
     color: #fff;
 }
 
-/* Avatar utilisateur */
-.dash-avatar {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-.dash-avatar svg {
-    width: 22px;
-    height: 22px;
-    fill: rgba(255, 255, 255, 0.8);
-}
 
 /* ===== ZONE PRINCIPALE (sidebar + contenu) ===== */
 .dash-main {
@@ -755,4 +736,179 @@ html, body {
     color: rgba(255, 255, 255, 0.6);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 8px;
+}
+
+/* ===== BOUTON BURGER (caché sur desktop) ===== */
+.btn-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    flex-shrink: 0;
+}
+
+.btn-burger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Animation burger → croix quand sidebar ouverte */
+.dash-sidebar.open ~ * .btn-burger span:nth-child(1),
+.btn-burger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.btn-burger.open span:nth-child(2) {
+    opacity: 0;
+}
+.btn-burger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ===== OVERLAY SIDEBAR MOBILE ===== */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 199;
+}
+
+.sidebar-overlay.open {
+    display: block;
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+
+    html, body {
+        overflow: auto;
+        height: auto;
+    }
+
+    .dashboard {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    /* Navbar */
+    .dash-navbar {
+        padding: 0 14px;
+        height: 56px;
+    }
+
+    .btn-burger {
+        display: flex;
+        order: -1;
+    }
+
+    .dash-search {
+        display: none;
+    }
+
+    /* Sidebar → drawer depuis la gauche */
+    .dash-sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        height: 100vh;
+        z-index: 200;
+        border-radius: 0 30px 30px 0;
+        padding-top: 56px;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+    }
+
+    .dash-sidebar.open {
+        left: 0;
+    }
+
+    /* Contenu principal prend toute la largeur */
+    .dash-main {
+        flex-direction: column;
+        margin: 8px;
+        gap: 0;
+        overflow: visible;
+        min-height: 0;
+    }
+
+    .dash-content {
+        border-radius: 20px;
+        padding: 20px 14px;
+        overflow: visible;
+    }
+
+    /* Stats : 2 colonnes */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        padding: 14px 14px;
+    }
+
+    .stat-card-value {
+        font-size: 1.8rem;
+    }
+
+    /* Titre dashboard */
+    .dash-content-title {
+        font-size: 1.3rem;
+        margin-bottom: 16px;
+    }
+
+    /* Carte tâche : badges passent en dessous */
+    .task-card {
+        flex-wrap: wrap;
+        gap: 8px;
+        border-radius: 14px;
+        padding: 12px 12px;
+    }
+
+    .task-badges {
+        order: 3;
+        width: 100%;
+    }
+
+    /* Modale : plein écran mobile */
+    .modal-nouvelle-tache {
+        width: calc(100vw - 24px);
+        max-width: 100%;
+        padding: 22px 16px;
+        border-radius: 20px;
+    }
+
+    /* Footer */
+    .dash-footer {
+        padding: 12px 16px 8px;
+        border-radius: 100px 0 0 0;
+    }
+
+    .dash-footer-top {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .dash-footer-links {
+        align-items: center;
+    }
+
+    .dash-footer-social {
+        align-items: center;
+    }
+
+    .dash-footer-bottom {
+        text-align: center;
+    }
 }

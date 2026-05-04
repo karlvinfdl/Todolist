@@ -13,7 +13,7 @@ final class AccueilController extends AbstractController
     #[Route('/', name: 'app_accueil')]
     public function index(DocumentManager $dm): Response
     {
-        $avis = $dm->getRepository(Avis::class)->findBy([], ['createdAt' => 'DESC']);
+        $avis = $dm->getRepository(Avis::class)->findBy(['valide' => true], ['createdAt' => 'DESC']);
 
         return $this->render('accueil/index.html.twig', [
             'avis' => $avis,

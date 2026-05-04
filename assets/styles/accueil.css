@@ -430,6 +430,11 @@ body {
     padding-top: 12px;
 }
 
+/* ===== BOUTON VOIR PLUS (mobile uniquement) ===== */
+.btn-voir-plus {
+    display: none;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
     .hero-title {
@@ -447,5 +452,56 @@ body {
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+
+    /* Avis : n'affiche que le premier, les autres sont masqués */
+    .reviews {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 16px;
+        gap: 0;
+    }
+
+    .review-card {
+        display: none;
+        width: 100%;
+    }
+
+    .review-card:first-child {
+        display: flex;
+    }
+
+    /* Quand ouvert : tous visibles avec espacement */
+    .reviews.reviews-open .review-card {
+        display: flex;
+        margin-bottom: 16px;
+    }
+
+    /* Chevron voir plus */
+    .btn-voir-plus {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-top: 4px;
+        padding: 4px;
+        color: rgba(255, 255, 255, 0.6);
+        transition: color 0.2s;
+    }
+
+    .btn-voir-plus svg {
+        width: 28px;
+        height: 28px;
+        transition: transform 0.3s;
+    }
+
+    .btn-voir-plus.ouvert svg {
+        transform: rotate(180deg);
+    }
+
+    .btn-voir-plus:hover {
+        color: #fff;
     }
 }

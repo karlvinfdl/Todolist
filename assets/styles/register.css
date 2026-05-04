@@ -150,3 +150,28 @@
     font-size: 0.82rem;
     margin-top: 2px;
 }
+
+/* ===== RÈGLES DU MOT DE PASSE ===== */
+.password-rules {
+    list-style: none;
+    padding: 8px 12px;
+    margin: 4px 0 0;
+    background: rgba(59, 130, 246, 0.08); /* fond bleu très subtil */
+    border-left: 2px solid rgba(59, 130, 246, 0.4);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.55);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.password-rules li::before {
+    content: '✓ ';
+    color: rgba(59, 130, 246, 0.6);
+}
+
+.password-rules strong {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+}

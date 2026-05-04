@@ -6,6 +6,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         <link rel="stylesheet" href="{{ asset('styles/accueil.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
         {% block stylesheets %}{% endblock %}
 
         {% block javascripts %}
@@ -36,8 +37,9 @@
             <div class="footer-top">
 
                 <div class="footer-links">
-                    <a href="#">Politique de confidentialité</a>
-                    <a href="#">Conditions d'utilisation</a>
+                    <a href="{{ path('app_politique_confidentialite') }}">Politique de confidentialité</a>
+                    <a href="{{ path('app_conditions') }}">Conditions d'utilisation</a>
+                    <a href="{{ path('app_cookies') }}">Cookies</a>
                 </div>
 
                 <div class="footer-social">
@@ -78,5 +80,33 @@
         </footer>
 
     </div>
+
+    {# ===== BANDEAU CONSENTEMENT COOKIES ===== #}
+    <div class="cookie-banner" id="cookieBanner" style="display:none;">
+        <p>
+            TaskTracker utilise des cookies nécessaires à son fonctionnement (session, sécurité CSRF).
+            <a href="{{ path('app_cookies') }}">En savoir plus</a>
+        </p>
+        <div class="cookie-banner-btns">
+            <button class="btn-refuse-cookies" onclick="refuserCookies()">Refuser les optionnels</button>
+            <button class="btn-accept-cookies" onclick="accepterCookies()">Accepter</button>
+        </div>
+    </div>
+    <script>
+        (function () {
+            if (!localStorage.getItem('cookie_consent')) {
+                document.getElementById('cookieBanner').style.display = 'flex';
+            }
+        })();
+        function accepterCookies() {
+            localStorage.setItem('cookie_consent', 'accepted');
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+        function refuserCookies() {
+            localStorage.setItem('cookie_consent', 'refused');
+            document.getElementById('cookieBanner').style.display = 'none';
+        }
+    </script>
+
     </body>
 </html>

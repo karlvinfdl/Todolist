@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de cookies – TaskTracker</title>
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
+    {{ importmap('app') }}
+</head>
+<body>
+
+<div class="legal-page">
+
+    <nav class="legal-navbar">
+        <img src="{{ asset('images/logo.png') }}" alt="TaskTracker">
+        <a href="javascript:history.back()" class="legal-navbar-back">← Retour</a>
+    </nav>
+
+    <div class="legal-content">
+
+        <h1>Politique de gestion des cookies</h1>
+        <p class="legal-date">Dernière mise à jour : 4 mai 2026 – Conforme RGPD / Directive ePrivacy</p>
+
+        <div class="legal-section">
+            <h2><span class="section-num">01</span> Qu'est-ce qu'un cookie ?</h2>
+            <p>
+                Un cookie est un petit fichier texte déposé sur votre appareil (ordinateur, smartphone, tablette)
+                lors de votre visite sur un site web. Il permet au site de mémoriser des informations vous concernant
+                afin d'améliorer votre expérience de navigation.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">02</span> Cookies utilisés par TaskTracker</h2>
+            <p>TaskTracker utilise uniquement des cookies strictement nécessaires au fonctionnement du service :</p>
+            <ul>
+                <li>
+                    <strong>PHPSESSID</strong> – Cookie de session PHP.<br>
+                    Rôle : maintenir votre session authentifiée pendant votre navigation.<br>
+                    Durée : fin de session (fermeture du navigateur).
+                </li>
+                <li>
+                    <strong>REMEMBERME</strong> – Cookie "Se souvenir de moi" (Symfony Security).<br>
+                    Rôle : vous reconnecter automatiquement sans ressaisir vos identifiants.<br>
+                    Durée : 7 jours. Déposé uniquement si vous cochez la case "Se souvenir de moi".
+                </li>
+                <li>
+                    <strong>_csrf_token</strong> – Jeton de protection CSRF.<br>
+                    Rôle : sécuriser les formulaires contre les attaques de type CSRF (Cross-Site Request Forgery).<br>
+                    Durée : session.
+                </li>
+            </ul>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">03</span> Cookies tiers</h2>
+            <p>
+                TaskTracker <strong>n'utilise aucun cookie tiers</strong> à des fins publicitaires, de suivi
+                ou d'analyse (pas de Google Analytics, pas de traceurs de réseaux sociaux, pas de publicité ciblée).
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">04</span> Votre consentement</h2>
+            <p>
+                Conformément à la directive ePrivacy et aux recommandations de la CNIL, les cookies
+                <strong>strictement nécessaires</strong> au fonctionnement du service (session, CSRF)
+                ne nécessitent pas votre consentement préalable.
+            </p>
+            <p>
+                Le cookie <strong>REMEMBERME</strong> est soumis à votre consentement explicite : il n'est
+                déposé que si vous cochez la case "Se souvenir de moi" sur la page de connexion.
+                Vous pouvez retirer ce consentement à tout moment en décochant cette option ou en vous
+                déconnectant.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">05</span> Gérer et supprimer les cookies</h2>
+            <p>Vous pouvez contrôler les cookies directement depuis votre navigateur :</p>
+            <ul>
+                <li><strong>Google Chrome :</strong> Paramètres → Confidentialité et sécurité → Cookies</li>
+                <li><strong>Mozilla Firefox :</strong> Paramètres → Vie privée et sécurité → Cookies</li>
+                <li><strong>Microsoft Edge :</strong> Paramètres → Cookies et autorisations de site</li>
+                <li><strong>Safari :</strong> Préférences → Confidentialité → Gérer les données de site</li>
+            </ul>
+            <p>
+                La désactivation des cookies strictement nécessaires (session, CSRF) entraînera
+                l'impossibilité de vous connecter et d'utiliser TaskTracker.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">06</span> Contact</h2>
+            <p>
+                Pour toute question concernant notre utilisation des cookies, contactez-nous à :
+                <a href="mailto:TaskTracker@gmail.com">TaskTracker@gmail.com</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de confidentialité – TaskTracker</title>
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
+    {{ importmap('app') }}
+</head>
+<body>
+
+<div class="legal-page">
+
+    <nav class="legal-navbar">
+        <img src="{{ asset('images/logo.png') }}" alt="TaskTracker">
+        <a href="javascript:history.back()" class="legal-navbar-back">← Retour</a>
+    </nav>
+
+    <div class="legal-content">
+
+        <h1>Politique de confidentialité</h1>
+        <p class="legal-date">Dernière mise à jour : 4 mai 2026 – Conforme au RGPD</p>
+
+        <div class="legal-section">
+            <h2><span class="section-num">01</span> Responsable du traitement</h2>
+            <p>
+                Le responsable du traitement des données personnelles collectées via TaskTracker est
+                l'équipe de développement du projet. Contact :
+                <a href="mailto:TaskTracker@gmail.com">TaskTracker@gmail.com</a>
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">02</span> Données collectées</h2>
+            <p>Nous collectons uniquement les données nécessaires au fonctionnement du service :</p>
+            <ul>
+                <li><strong>Lors de l'inscription :</strong> adresse email, mot de passe (hashé, jamais stocké en clair).</li>
+                <li><strong>Lors de l'utilisation :</strong> projets créés, tâches (titre, description, statut, priorité, date d'échéance).</li>
+                <li><strong>Avis :</strong> prénom, note, commentaire (stockés dans MongoDB Atlas).</li>
+                <li><strong>Données techniques :</strong> cookies de session, logs d'accès.</li>
+            </ul>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">03</span> Finalités du traitement</h2>
+            <p>Vos données sont utilisées exclusivement pour :</p>
+            <ul>
+                <li>Vous permettre de vous authentifier et d'accéder à votre espace personnel.</li>
+                <li>Stocker et afficher vos projets et tâches.</li>
+                <li>Afficher les avis validés sur la page d'accueil.</li>
+                <li>Assurer la sécurité de l'application (détection de connexions anormales).</li>
+            </ul>
+            <p>Nous ne vendons pas et ne partageons pas vos données avec des tiers à des fins commerciales.</p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">04</span> Base légale</h2>
+            <p>
+                Le traitement repose sur l'<strong>exécution d'un contrat</strong> (fourniture du service)
+                et votre <strong>consentement</strong> explicite lors de l'inscription.
+                Vous pouvez retirer votre consentement à tout moment en supprimant votre compte.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">05</span> Durée de conservation</h2>
+            <ul>
+                <li><strong>Données de compte :</strong> conservées jusqu'à la suppression du compte.</li>
+                <li><strong>Tâches et projets :</strong> supprimés avec le compte.</li>
+                <li><strong>Avis :</strong> conservés jusqu'à suppression manuelle par l'administrateur.</li>
+                <li><strong>Cookies de session :</strong> expirés après 7 jours (option "Se souvenir de moi") ou à la fermeture du navigateur.</li>
+            </ul>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">06</span> Hébergement des données</h2>
+            <p>
+                Les données relationnelles (utilisateurs, projets, tâches) sont stockées dans une base
+                <strong>MySQL</strong> hébergée localement en environnement de développement.
+                Les avis sont stockés sur <strong>MongoDB Atlas</strong> (cluster AWS eu-west-1, Irlande).
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">07</span> Vos droits (RGPD)</h2>
+            <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
+            <ul>
+                <li><strong>Droit d'accès :</strong> obtenir une copie de vos données.</li>
+                <li><strong>Droit de rectification :</strong> corriger des données inexactes.</li>
+                <li><strong>Droit à l'effacement :</strong> demander la suppression de votre compte et de vos données.</li>
+                <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format structuré.</li>
+                <li><strong>Droit d'opposition :</strong> vous opposer à certains traitements.</li>
+            </ul>
+            <p>
+                Pour exercer vos droits, contactez-nous à :
+                <a href="mailto:TaskTracker@gmail.com">TaskTracker@gmail.com</a>.
+                Délai de réponse : 30 jours maximum.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">08</span> Sécurité</h2>
+            <p>
+                Nous mettons en œuvre les mesures suivantes pour protéger vos données :
+            </p>
+            <ul>
+                <li>Mots de passe hachés avec <strong>bcrypt</strong> (via Symfony Password Hasher).</li>
+                <li>Protection CSRF sur tous les formulaires (tokens Symfony).</li>
+                <li>Accès aux données limité au propriétaire du compte (vérification côté serveur).</li>
+                <li>Accès à l'interface d'administration limité au rôle ROLE_ADMIN.</li>
+            </ul>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">09</span> Cookies</h2>
+            <p>
+                Pour plus d'informations sur les cookies utilisés par TaskTracker, consultez notre
+                <a href="{{ path('app_cookies') }}">Politique de gestion des cookies</a>.
+            </p>
+        </div>
+
+        <div class="legal-section">
+            <h2><span class="section-num">10</span> Réclamation</h2>
+            <p>
+                Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une
+                réclamation auprès de la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) :
+                <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

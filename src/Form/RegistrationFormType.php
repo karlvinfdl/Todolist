@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
@@ -40,6 +41,8 @@ class RegistrationFormType extends AbstractType
                     ],
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                // ===== RÈGLES DU MOT DE PASSE =====
+                // 8 caractères min · 1 majuscule · 1 minuscule · 1 chiffre · 1 caractère spécial
                 'constraints' => [
                     new NotBlank(
                         message: 'Veuillez entrer un mot de passe.',
@@ -48,6 +51,22 @@ class RegistrationFormType extends AbstractType
                         min: 8,
                         minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
                         max: 4096,
+                    ),
+                    new Regex(
+                        pattern: '/[A-Z]/',
+                        message: 'Le mot de passe doit contenir au moins une lettre majuscule (ex: A, B, C…).',
+                    ),
+                    new Regex(
+                        pattern: '/[a-z]/',
+                        message: 'Le mot de passe doit contenir au moins une lettre minuscule (ex: a, b, c…).',
+                    ),
+                    new Regex(
+                        pattern: '/[0-9]/',
+                        message: 'Le mot de passe doit contenir au moins un chiffre (ex: 1, 2, 3…).',
+                    ),
+                    new Regex(
+                        pattern: '/[!@#$%^&*()_+\-=\[\]{};\':"\\|,.<>\/?]/',
+                        message: 'Le mot de passe doit contenir au moins un caractère spécial (!, @, #, $, %…).',
                     ),
                 ],
             ])

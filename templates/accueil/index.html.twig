@@ -16,8 +16,9 @@
 </section>
 
 {# ===== AVIS ===== #}
+{% if avis|length > 0 %}
 <section class="reviews-section">
-    <div class="reviews">
+    <div class="reviews" id="reviewsList">
         {% for a in avis %}
         <div class="review-card">
             <div class="review-avatar">{{ a.nom|first|upper }}</div>
@@ -36,6 +37,26 @@
         </div>
         {% endfor %}
     </div>
-</section>
 
+    {% if avis|length > 1 %}
+    <button class="btn-voir-plus" id="btnVoirPlus" onclick="toggleAvis(this)" aria-label="Voir plus">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+        </svg>
+    </button>
+    {% endif %}
+</section>
+{% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+function toggleAvis(btn) {
+    var liste = document.getElementById('reviewsList');
+    var ouvert = liste.classList.toggle('reviews-open');
+    btn.classList.toggle('ouvert', ouvert);
+}
+</script>
 {% endblock %}
