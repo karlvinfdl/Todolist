@@ -21,10 +21,8 @@ final class TableauDeBordController extends AbstractController
     {
         $user = $this->getUser();
 
-        // Récupère les projets de l'utilisateur connecté
         $projects = $projectRepo->findBy(['user' => $user]);
 
-        // Récupère toutes les tâches liées aux projets de l'utilisateur
         $tasks = $taskRepo->createQueryBuilder('t')
             ->join('t.project', 'p')
             ->where('p.user = :user')
@@ -33,7 +31,6 @@ final class TableauDeBordController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        // Calcul des statistiques
         $stats = [
             'total'    => \count($tasks),
             'a_faire'  => \count(array_filter($tasks, fn($t) => $t->getStatus() === 'a_faire')),
@@ -52,8 +49,8 @@ final class TableauDeBordController extends AbstractController
 
         return $this->render('tableau_de_bord/index.html.twig', [
             'projects'   => $projects,
-            'tasks'      => $tasks,       // toutes les tâches
-            'todayTasks' => $todayTasks,  // tâches du jour
+            'tasks'      => $tasks,
+            'todayTasks' => $todayTasks,
             'stats'      => $stats,
         ]);
     }
@@ -123,17 +120,13 @@ final class TableauDeBordController extends AbstractController
         return $this->redirectToRoute('app_tableau_de_bord');
     }
 
-    // ===== MODIFIER UNE TÂCHE =====
-    // Reçoit les données du formulaire d'édition (modale) et met à jour la tâche
     #[Route('/tache/modifier/{id}', name: 'app_tache_modifier', methods: ['POST'])]
     public function modifierTache(Task $task, Request $request, EntityManagerInterface $em, ProjectRepository $projectRepo): Response
     {
-        // Sécurité : seul le propriétaire de la tâche peut la modifier
         if ($task->getProject()->getUser()->getId() !== $this->getUser()->getId()) {
             return $this->redirectToRoute('app_tableau_de_bord');
         }
 
-        // Mise à jour des champs de base
         $titre = trim($request->request->get('title', ''));
         if ($titre !== '') {
             $task->setTitle($titre);
@@ -142,11 +135,9 @@ final class TableauDeBordController extends AbstractController
         $task->setStatus($request->request->get('status', $task->getStatus()));
         $task->setPriority($request->request->get('priority', $task->getPriority()));
 
-        // Mise à jour de la date d'échéance (null si le champ est vide)
         $dueDateStr = $request->request->get('dueDate');
         $task->setDueDate($dueDateStr ? new \DateTime($dueDateStr) : null);
 
-        // Changement de projet possible (vérifie que le nouveau projet appartient bien à l'utilisateur)
         $newProjectId = $request->request->get('project_id');
         if ($newProjectId) {
             $newProject = $projectRepo->find($newProjectId);

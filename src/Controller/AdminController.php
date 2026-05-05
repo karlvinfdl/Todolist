@@ -62,9 +62,7 @@ final class AdminController extends AbstractController
         return $this->redirectToRoute('app_admin');
     }
 
-    // ===== SUPPRESSION VOLONTAIRE =====
-    // La promotion/rétrogradation admin a été retirée : seul un accès direct en BDD
-    // peut modifier les rôles, pour éviter toute élévation de privilèges accidentelle.
+    // Promotion/rétrogradation admin retirée volontairement : modification des rôles uniquement via BDD directe.
 
     #[Route('/avis/supprimer/{id}', name: 'app_admin_supprimer_avis', methods: ['POST'])]
     public function supprimerAvis(string $id, DocumentManager $dm): Response
