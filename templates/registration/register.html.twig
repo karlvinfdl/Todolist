@@ -7,6 +7,7 @@
     <title>Inscription – TaskTracker</title>
     {# Feuille de style dédiée à la page inscription #}
     <link rel="stylesheet" href="{{ asset('styles/register.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
     {{ importmap('app') }}
 </head>
 <body>
@@ -39,11 +40,18 @@
                 {{ form_errors(registrationForm.email) }}
             </div>
 
-            {# Champ mot de passe #}
+            {# Champ mot de passe + règles de complexité affichées sous le champ #}
             <div class="register-field">
                 {{ form_label(registrationForm.plainPassword.first) }}
                 {{ form_widget(registrationForm.plainPassword.first) }}
                 {{ form_errors(registrationForm.plainPassword.first) }}
+                <ul class="password-rules">
+                    <li>Au moins <strong>8 caractères</strong></li>
+                    <li>Au moins <strong>1 majuscule</strong> (ex : A, B, C…)</li>
+                    <li>Au moins <strong>1 minuscule</strong> (ex : a, b, c…)</li>
+                    <li>Au moins <strong>1 chiffre</strong> (ex : 1, 2, 3…)</li>
+                    <li>Au moins <strong>1 caractère spécial</strong> (ex : !, @, #, $…)</li>
+                </ul>
             </div>
 
             {# Champ confirmation du mot de passe #}
@@ -66,6 +74,34 @@
     </div>
 
 </div>
+
+
+{# ===== BANDEAU CONSENTEMENT COOKIES ===== #}
+<div class="cookie-banner" id="cookieBanner" style="display:none;">
+    <p>
+        TaskTracker utilise des cookies nécessaires à son fonctionnement (session, sécurité CSRF).
+        <a href="{{ path('app_cookies') }}">En savoir plus</a>
+    </p>
+    <div class="cookie-banner-btns">
+        <button class="btn-refuse-cookies" onclick="refuserCookies()">Refuser les optionnels</button>
+        <button class="btn-accept-cookies" onclick="accepterCookies()">Accepter</button>
+    </div>
+</div>
+<script>
+    (function () {
+        if (!localStorage.getItem('cookie_consent')) {
+            document.getElementById('cookieBanner').style.display = 'flex';
+        }
+    })();
+    function accepterCookies() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+    function refuserCookies() {
+        localStorage.setItem('cookie_consent', 'refused');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>

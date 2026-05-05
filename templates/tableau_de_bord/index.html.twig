@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de bord – TaskTracker</title>
     <link rel="stylesheet" href="{{ asset('styles/tableau_de_bord.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/legal.css') }}">
     {{ importmap('app') }}
 </head>
 <body>
@@ -14,6 +15,12 @@
 
     {# ===== NAVBAR ===== #}
     <nav class="dash-navbar">
+        {# Bouton burger – visible uniquement sur mobile #}
+        <button class="btn-burger" id="btnBurger" aria-label="Ouvrir le menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <img src="{{ asset('images/logo.png') }}" alt="TaskTracker" class="dash-navbar-logo">
 
         <div class="dash-search">
@@ -27,11 +34,11 @@
             <button class="btn-nouvelle-tache" id="btnNouveauElement">
                 Nouveau <span class="plus">+</span>
             </button>
-            <div class="dash-avatar">
-                <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-            </div>
         </div>
     </nav>
+
+    {# Overlay sombre quand la sidebar est ouverte sur mobile #}
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     {# ===== ZONE PRINCIPALE ===== #}
     <div class="dash-main">
@@ -107,6 +114,7 @@
             {# Liste des tâches – chaque carte a des data-attributes pour le filtrage JS #}
             <div class="tasks-list" id="tasksList">
 
+                {# Chaque carte embarque les data-* nécessaires au filtrage et à la modale d'édition #}
                 {% for task in tasks %}
                 <div class="task-card"
                      data-project="{{ task.project.id }}"
@@ -114,7 +122,7 @@
                      data-today="{{ task.dueDate ? (task.dueDate|date('Y-m-d') == 'now'|date('Y-m-d') ? '1' : '0') : (task.createdAt|date('Y-m-d') == 'now'|date('Y-m-d') ? '1' : '0') }}"
                      data-titre="{{ task.title|lower }}">
 
-                    {# Checkbox statut #}
+                    {# Checkbox statut – coche = terminée, décoche = à faire #}
                     <form method="post" action="{{ path('app_tache_statut', {id: task.id}) }}" class="task-checkbox-form">
                         <input type="hidden" name="status" value="{{ task.status == 'terminee' ? 'a_faire' : 'terminee' }}">
                         <input type="checkbox" class="task-checkbox" onchange="this.form.submit()" {{ task.status == 'terminee' ? 'checked' : '' }}>
@@ -139,7 +147,7 @@
                         </div>
                     </div>
 
-                    {# Badges #}
+                    {# Badges statut et priorité #}
                     <div class="task-badges">
                         {% if task.status == 'terminee' %}
                             <span class="badge badge-terminee">Terminées</span>
@@ -157,8 +165,17 @@
                         {% endif %}
                     </div>
 
-                    {# Bouton éditer #}
-                    <button class="btn-edit" title="Modifier">
+                    {# Bouton éditer – ouvre la modale pré-remplie via ouvrirEdition() #}
+                    <button class="btn-edit" title="Modifier"
+                            onclick="ouvrirEdition({
+                                id: {{ task.id }},
+                                titre: '{{ task.title|e('js') }}',
+                                description: '{{ task.description ? task.description|e('js') : '' }}',
+                                status: '{{ task.status }}',
+                                priority: '{{ task.priority }}',
+                                dueDate: '{{ task.dueDate ? task.dueDate|date('Y-m-d') : '' }}',
+                                projectId: {{ task.project.id }}
+                            })">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
                             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -183,8 +200,9 @@
     <footer class="dash-footer">
         <div class="dash-footer-top">
             <div class="dash-footer-links">
-                <a href="#">Politique de confidentialité</a>
-                <a href="#">Conditions d'utilisation</a>
+                <a href="{{ path('app_politique_confidentialite') }}">Politique de confidentialité</a>
+                <a href="{{ path('app_conditions') }}">Conditions d'utilisation</a>
+                <a href="{{ path('app_cookies') }}">Cookies</a>
             </div>
             <div class="dash-footer-social">
                 <span>Suivez-nous!</span>
@@ -199,6 +217,62 @@
         <div class="dash-footer-bottom">&copy; 2026 TaskTracker – Tous droits réservés</div>
     </footer>
 
+</div>
+
+{# ===== MODALE ÉDITION DE TÂCHE ===== #}
+{# Ouverte par ouvrirEdition() – les champs sont pré-remplis en JS #}
+<div class="modal-overlay" id="overlayEdition" style="display:none;">
+    <div class="modal-nouvelle-tache" id="modalEdition">
+
+        <div class="panel-header">
+            <span style="font-weight:600; font-size:1rem;">Modifier la tâche</span>
+            <button class="btn-fermer-panel" id="fermerEditionX">✕</button>
+        </div>
+
+        <form method="post" id="formEditionTache" action="">
+            <div class="panel-field">
+                <label for="editTitre">Titre <span class="requis">*</span></label>
+                <input type="text" id="editTitre" name="title" required>
+            </div>
+            <div class="panel-field">
+                <label for="editDesc">Description</label>
+                <textarea id="editDesc" name="description" placeholder="Description (optionnelle)…"></textarea>
+            </div>
+            <div class="panel-field">
+                <label for="editProjet">Projet</label>
+                <select id="editProjet" name="project_id">
+                    {% for project in projects %}
+                        <option value="{{ project.id }}">{{ project.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="panel-field">
+                <label for="editStatut">Statut</label>
+                <select id="editStatut" name="status">
+                    <option value="a_faire">A faire</option>
+                    <option value="en_cours">En cours</option>
+                    <option value="terminee">Terminée</option>
+                </select>
+            </div>
+            <div class="panel-field">
+                <label for="editPriorite">Priorité</label>
+                <select id="editPriorite" name="priority">
+                    <option value="basse">Basse</option>
+                    <option value="moyenne">Moyenne</option>
+                    <option value="haute">Haute</option>
+                </select>
+            </div>
+            <div class="panel-field">
+                <label for="editDate">Date d'échéance</label>
+                <input type="date" id="editDate" name="dueDate">
+            </div>
+            <div class="panel-footer">
+                <button type="submit" class="btn-enregistrer">Enregistrer</button>
+                <button type="button" class="btn-annuler" id="annulerEdition">Annuler</button>
+            </div>
+        </form>
+
+    </div>
 </div>
 
 {# ===== MODALE UNIFIÉE TÂCHE / PROJET ===== #}
@@ -282,6 +356,37 @@
 </div>
 
 <script>
+    /* ===== Modale édition de tâche ===== */
+    var overlayEdition = document.getElementById('overlayEdition');
+
+    // Ouvre la modale et pré-remplit les champs avec les données de la tâche cliquée
+    function ouvrirEdition(task) {
+        document.getElementById('editTitre').value   = task.titre;
+        document.getElementById('editDesc').value    = task.description;
+        document.getElementById('editStatut').value  = task.status;
+        document.getElementById('editPriorite').value = task.priority;
+        document.getElementById('editDate').value    = task.dueDate;
+        document.getElementById('editProjet').value  = task.projectId;
+        // L'action du formulaire pointe vers la route de modification de cette tâche précise
+        document.getElementById('formEditionTache').action = '/tache/modifier/' + task.id;
+        overlayEdition.style.display = 'flex';
+    }
+
+    document.getElementById('fermerEditionX').addEventListener('click', function() {
+        overlayEdition.style.display = 'none';
+    });
+
+    document.getElementById('annulerEdition').addEventListener('click', function() {
+        overlayEdition.style.display = 'none';
+    });
+
+    // Ferme la modale en cliquant en dehors
+    overlayEdition.addEventListener('click', function(event) {
+        if (event.target === overlayEdition) {
+            overlayEdition.style.display = 'none';
+        }
+    });
+
     /* ===== Modale unifiée ===== */
     var overlayUnifie = document.getElementById('overlayUnifie');
 
@@ -377,6 +482,72 @@
     window.addEventListener('DOMContentLoaded', function() {
         filtrer('toutes', null, 'Mes Tâches');
     });
+
+    /* ===== Burger / Sidebar mobile ===== */
+    var btnBurger     = document.getElementById('btnBurger');
+    var sidebarOverlay = document.getElementById('sidebarOverlay');
+    var dashSidebar   = document.querySelector('.dash-sidebar');
+
+    function ouvrirSidebar() {
+        dashSidebar.classList.add('open');
+        sidebarOverlay.classList.add('open');
+    }
+
+    function fermerSidebar() {
+        dashSidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('open');
+    }
+
+    btnBurger.addEventListener('click', function() {
+        if (dashSidebar.classList.contains('open')) {
+            fermerSidebar();
+            btnBurger.classList.remove('open');
+        } else {
+            ouvrirSidebar();
+            btnBurger.classList.add('open');
+        }
+    });
+
+    sidebarOverlay.addEventListener('click', function() {
+        fermerSidebar();
+        btnBurger.classList.remove('open');
+    });
+
+    /* Ferme la sidebar quand on clique un lien (mobile) */
+    document.querySelectorAll('.sidebar-nav a, .sidebar-project, .sidebar-category').forEach(function(el) {
+        el.addEventListener('click', function() {
+            fermerSidebar();
+            btnBurger.classList.remove('open');
+        });
+    });
+</script>
+
+
+{# ===== BANDEAU CONSENTEMENT COOKIES ===== #}
+<div class="cookie-banner" id="cookieBanner" style="display:none;">
+    <p>
+        TaskTracker utilise des cookies nécessaires à son fonctionnement (session, sécurité CSRF).
+        <a href="{{ path('app_cookies') }}">En savoir plus</a>
+    </p>
+    <div class="cookie-banner-btns">
+        <button class="btn-refuse-cookies" onclick="refuserCookies()">Refuser les optionnels</button>
+        <button class="btn-accept-cookies" onclick="accepterCookies()">Accepter</button>
+    </div>
+</div>
+<script>
+    (function () {
+        if (!localStorage.getItem('cookie_consent')) {
+            document.getElementById('cookieBanner').style.display = 'flex';
+        }
+    })();
+    function accepterCookies() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
+    function refuserCookies() {
+        localStorage.setItem('cookie_consent', 'refused');
+        document.getElementById('cookieBanner').style.display = 'none';
+    }
 </script>
 
 </body>

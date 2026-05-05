@@ -80,6 +80,34 @@
     border-color: #3b82f6; /* bordure bleue au focus */
 }
 
+/* ===== CASE SE SOUVENIR DE MOI ===== */
+.login-remember {
+    margin-bottom: 14px;
+}
+
+.login-remember label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    user-select: none;
+}
+
+.login-remember input[type="checkbox"] {
+    accent-color: #3b82f6; /* teinte bleue sur la coche */
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.login-remember-hint {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+}
+
 /* ===== LIEN MOT DE PASSE OUBLIÉ ===== */
 .login-forgot {
     display: block;

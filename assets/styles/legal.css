@@ -1,0 +1,181 @@
+/* ===== PAGES LÉGALES ===== */
+
+.legal-page {
+    min-height: 100vh;
+    background-image: url('../images/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #fff;
+}
+
+/* ===== NAVBAR ===== */
+.legal-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: rgba(28, 32, 55, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.legal-navbar img {
+    height: 38px;
+    width: auto;
+}
+
+.legal-navbar-back {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.legal-navbar-back:hover {
+    color: #fff;
+}
+
+/* ===== CONTENU ===== */
+.legal-content {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+}
+
+.legal-content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.legal-content .legal-date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 40px;
+}
+
+/* ===== SECTIONS ===== */
+.legal-section {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+}
+
+.legal-section h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #3b82f6;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legal-section h2 .section-num {
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #60a5fa;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.legal-section p,
+.legal-section li {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.legal-section ul {
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+.legal-section ul li {
+    margin-bottom: 6px;
+}
+
+.legal-section strong {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.legal-section a {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+
+/* ===== BANDEAU COOKIES ===== */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1C2037;
+    border-top: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    z-index: 9999;
+    flex-wrap: wrap;
+}
+
+.cookie-banner p {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+}
+
+.cookie-banner a {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+
+.cookie-banner-btns {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.btn-accept-cookies {
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 30px 0 30px 0;
+    padding: 9px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-accept-cookies:hover {
+    background: #2563eb;
+}
+
+.btn-refuse-cookies {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 9px 20px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-refuse-cookies:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+}
